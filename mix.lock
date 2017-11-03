@@ -1,0 +1,3 @@
+%{
+  "libring": {:hex, :libring, "1.2.1", "8e8a40a71df2f09819d5033781fff922299a2f5f15f1cd391c54938556a85e72", [], [], "hexpm"},
+}
