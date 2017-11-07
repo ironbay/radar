@@ -20,9 +20,11 @@ defmodule Radar.Process do
 			def get(args) do
 				args
 				|> name
-				|> Radar.execute(fn -> get_local(args) end)
+				|> Radar.which_node
+				|> Radar.Dispatcher.call(__MODULE__, :get_local, [args])
 			end
 
+			@doc false
 			def get_local(args) do
 				{Radar.Registry, name(args)}
 				|> Registry.whereis_name
@@ -37,21 +39,28 @@ defmodule Radar.Process do
 			def call(args, msg, timeout \\ 5000) do
 				args
 				|> name
-				|> Radar.execute(fn ->
-					args
-					|> get_local
-					|> GenServer.call(msg, timeout)
-				end)
+				|> Radar.which_node
+				|> Radar.Dispatcher.call(__MODULE__, :call_local, [args, msg, timeout], timeout)
+			end
+
+			@doc false
+			def call_local(args, msg, timeout) do
+				args
+				|> get_local
+				|> GenServer.call(msg, timeout)
 			end
 
 			def cast(args, msg) do
 				args
 				|> name
-				|> Radar.execute(fn ->
-					args
-					|> get_local
-					|> GenServer.cast(msg)
-				end)
+				|> Radar.which_node
+				|> Radar.Dispatcher.cast(__MODULE__, :cast_local, [args, msg])
+			end
+
+			def cast_local(args, msg) do
+				args
+				|> get_local
+				|> GenServer.cast(msg)
 			end
 
 			def supervisor_spec do
@@ -71,7 +80,6 @@ defmodule Radar.Example do
 	use Radar.Process
 
 	def init(args) do
-		IO.puts("Starting #{__MODULE__}")
 		Radar.join(:a)
 		|> IO.inspect
 		{:ok, %{}}

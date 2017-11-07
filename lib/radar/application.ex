@@ -11,6 +11,7 @@ defmodule Radar.Application do
     children = [
       {Registry, [keys: :unique, name: Radar.Registry]},
       {Registry, [keys: :duplicate, name: Radar.Group]},
+      {Radar.Dispatcher.Supervisor, []},
       Radar.Example.supervisor_spec(),
     ]
     # See https://hexdocs.pm/elixir/Supervisor.html
