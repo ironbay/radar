@@ -12,7 +12,6 @@ defmodule Radar.Application do
       {Registry, [keys: :unique, partitions: System.schedulers_online, name: Radar.Registry]},
       {Registry, [keys: :duplicate, partitions: System.schedulers_online, name: Radar.Group]},
       {Radar.Dispatcher.Supervisor, []},
-      Radar.Example.supervisor_spec(),
     ]
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

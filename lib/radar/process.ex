@@ -75,17 +75,3 @@ defmodule Radar.Process do
 		{:via, Registry, {Radar.Registry, name}}
 	end
 end
-
-defmodule Radar.Example do
-	use Radar.Process
-
-	def init(args) do
-		Radar.join(:a)
-		|> IO.inspect
-		{:ok, %{}}
-	end
-
-	def handle_call(:hello, _from, state) do
-		{:reply, :hi, state}
-	end
-end
