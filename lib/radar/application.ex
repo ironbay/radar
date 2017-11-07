@@ -9,7 +9,8 @@ defmodule Radar.Application do
     {:ok, _pid} = HashRing.Managed.new(:radar, monitor_nodes: true)
     # List all child processes to be supervised
     children = [
-      {Registry, [keys: :unique, name: Radar.Registry]}
+      {Registry, [keys: :unique, name: Radar.Registry]},
+      Radar.Example.supervisor_spec(),
     ]
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options

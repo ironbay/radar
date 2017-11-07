@@ -1,24 +1,22 @@
 defmodule Radar do
-  @moduledoc """
-  Documentation for Radar.
-  """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Radar.hello
-      :world
-
-  """
-  def call(name, req, timeout \\ 5000) do
-    node = HashRing.Managed.key_to_node(:radar, name)
-    self = self()
-    Node.spawn_link
+  def whereis(name) do
+    HashRing.Managed.key_to_node(:radar, name)
   end
 
-  def whereis(key) do
-    
+  def execute(name, func) do
+    node = whereis(name)
+    cond do
+      node === Node.self -> func.()
+      true ->
+        s = self()
+        Node.spawn_link(node, fn ->
+          reply = func.()
+          send(s, reply)
+        end)
+        receive do
+          result -> result
+        end
+    end
   end
 end
