@@ -10,6 +10,7 @@ defmodule Radar.Application do
     # List all child processes to be supervised
     children = [
       {Registry, [keys: :unique, name: Radar.Registry]},
+      {Registry, [keys: :duplicate, name: Radar.Group]},
       Radar.Example.supervisor_spec(),
     ]
     # See https://hexdocs.pm/elixir/Supervisor.html

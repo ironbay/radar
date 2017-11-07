@@ -72,6 +72,8 @@ defmodule Radar.Example do
 
 	def init(args) do
 		IO.puts("Starting #{__MODULE__}")
+		Radar.join(:a)
+		|> IO.inspect
 		{:ok, %{}}
 	end
 
