@@ -9,8 +9,8 @@ defmodule Radar.Application do
     {:ok, _pid} = HashRing.Managed.new(:radar, monitor_nodes: true)
     # List all child processes to be supervised
     children = [
-      {Registry, [keys: :unique, name: Radar.Registry]},
-      {Registry, [keys: :duplicate, name: Radar.Group]},
+      {Registry, [keys: :unique, partitions: System.schedulers_online, name: Radar.Registry]},
+      {Registry, [keys: :duplicate, partitions: System.schedulers_online, name: Radar.Group]},
       {Radar.Dispatcher.Supervisor, []},
       Radar.Example.supervisor_spec(),
     ]

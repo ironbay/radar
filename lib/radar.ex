@@ -19,6 +19,6 @@ defmodule Radar do
     Radar.Group
     |> Registry.dispatch(group, fn entries ->
       for {pid, _} <- entries, do: GenServer.cast(pid, msg)
-    end)
+    end, parallel: true)
   end
 end
