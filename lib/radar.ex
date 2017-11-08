@@ -5,7 +5,8 @@ defmodule Radar do
   end
 
   # Pub Sub
-  def join(group, pid \\ self()) do
+  def join(group), do: join(group, self())
+  def join(group, pid) do
     Registry.register_name({Radar.Group, group}, pid)
   end
 
