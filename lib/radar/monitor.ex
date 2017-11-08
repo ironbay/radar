@@ -12,7 +12,7 @@ defmodule Radar.Monitor do
 			end
 
 			def init(_) do
-				:ok = :net_kernel.monitor_nodes(true, node_type: :all) |> IO.inspect
+				:ok = :net_kernel.monitor_nodes(true, node_type: :all)
 				{:ok, {}}
 			end
 
