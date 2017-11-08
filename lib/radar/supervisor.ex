@@ -4,7 +4,7 @@ defmodule Radar.Supervisor do
 	end
 
 	def init([module]) do
-		IO.inspect("Starting #{module} Supervisor")
+		IO.puts("Starting #{module} Supervisor")
 		import Supervisor.Spec
 		children = [
 			worker(module, [], restart: :transient)
