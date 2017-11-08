@@ -57,6 +57,7 @@ defmodule Radar.Process do
 				|> Radar.Dispatcher.cast(__MODULE__, :cast_local, [args, msg])
 			end
 
+			@doc false
 			def cast_local(args, msg) do
 				args
 				|> get_local
