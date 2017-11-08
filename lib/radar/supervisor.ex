@@ -17,7 +17,7 @@ defmodule Radar.Supervisor do
 	end
 
 	def stop(module, reason \\ :normal) do
-		Supervisor.stop(module, normal)
+		Supervisor.stop(module, reason)
 	end
 
 end
