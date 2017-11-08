@@ -14,4 +14,5 @@ defmodule Radar.Supervisor do
 	def start_child(module, args) do
 		{:ok, _} = Supervisor.start_child(module, [args])
 	end
+
 end

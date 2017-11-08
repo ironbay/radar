@@ -68,7 +68,6 @@ defmodule Radar.Process do
 				import Supervisor.Spec
 				supervisor(Radar.Supervisor, [__MODULE__], id: __MODULE__)
 			end
-
 		end
 	end
 
