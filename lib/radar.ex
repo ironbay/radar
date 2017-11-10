@@ -19,7 +19,7 @@ defmodule Radar do
   def broadcast_local(group, msg) do
     Radar.Group
     |> Registry.dispatch(group, fn entries ->
-      for {pid, _} <- entries, do: GenServer.cast(pid, msg)
+      for {pid, _} <- entries, do: send(pid, msg)
     end, parallel: true)
   end
 end
