@@ -1,6 +1,8 @@
 defmodule Radar.Supervisor do
 	def start_link(module) do
-		Supervisor.start_link(__MODULE__, [module], name: module)
+		result = Supervisor.start_link(__MODULE__, [module], name: module)
+		module.supervisor_start()
+		result
 	end
 
 	def init([module]) do
@@ -9,9 +11,7 @@ defmodule Radar.Supervisor do
 		children = [
 			worker(module, [], restart: :transient)
 		]
-		result = supervise(children, strategy: :simple_one_for_one)
-		module.supervisor_start()
-		result
+		supervise(children, strategy: :simple_one_for_one)
 	end
 
 	def start_child(module, args) do
