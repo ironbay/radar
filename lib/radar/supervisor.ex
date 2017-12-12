@@ -9,7 +9,9 @@ defmodule Radar.Supervisor do
 		children = [
 			worker(module, [], restart: :transient)
 		]
-		supervise(children, strategy: :simple_one_for_one)
+		result = supervise(children, strategy: :simple_one_for_one)
+		module.supervisor_start()
+		result
 	end
 
 	def start_child(module, args) do
