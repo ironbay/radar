@@ -2,6 +2,7 @@ defmodule Radar.Process do
 	defmacro __using__(_opts) do
 		quote do
 			use GenServer
+			@before_compile Radar.Process
 
 			def start_link(args) do
 				GenServer.start_link(__MODULE__, args, name: via(args))
@@ -68,7 +69,11 @@ defmodule Radar.Process do
 				import Supervisor.Spec
 				supervisor(Radar.Supervisor, [__MODULE__], id: __MODULE__)
 			end
+		end
+	end
 
+	defmacro __before_compile__(_env) do
+		quote do
 			def supervisor_start do
 			end
 		end
